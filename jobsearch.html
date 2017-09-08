@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<meta charset="utf-8">
+<meta name='viewport' content='width=device-width  initial-scale=1'>
+
+<link rel="stylesheet" href="p5.css">
+<link href="js/bootstrap.min.css" rel="stylesheet">
+<script src="js/jquery-3.2.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="p5/p5.min.js"></script>
+<script type="text/javascript" src="http://gdc.indeed.com/ads/apiresults.js"></script>
+
+
+<script src="p5/p5.dom.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+
+
+<body>
+    <div id="header">
+        <nav class="nav navbar-default">
+
+            <div class="navbar-header">
+                <h1 class="logo">KINGDOM JOB SEARCH</h1>
+
+
+                <ul id="nav">
+                    <li class="active"><a>HOME</a></li>
+                    <li><a>ABOUT US</a></li>
+                    <li><a>CONTACT US</a></li>
+                    <li><a>MEMBERS</a></li>
+
+
+                </ul>
+            </div>
+        </nav>
+
+
+    </div>
+    <p><br></p>
+
+
+    <div class="jumbotro">
+        <h2 id="search">SEARCH JOBS</h2>
+
+        <div class="col-md-6">
+
+            <label id="jobs">JOB</label>
+            <input type="text" id="job" class="form-control" placeholder="Type your job e.g..'engineer','webdeveloper','doctor'">
+
+        </div>
+        <div class="col-md-6">
+            <label id="jobs">COUNTRY</labelid>
+            <input type="text" id="country" class="form-control" placeholder="click to select country">
+
+		
+
+            <ul id="countries">
+                <li class="countriesli">Antarctica aq</li>
+                <li class="countriesli">Argentina ar</li>
+                <li class="countriesli">Australia au</li>
+                <li class="countriesli">Austria at</li>
+                <li class="countriesli">Bahrain bh</li>
+                <li class="countriesli">Belgium be</li>
+                <li class="countriesli">Brazil br</li>
+                <li class="countriesli">Canada ca</li>
+                <li class="countriesli">Chile cl</li>
+                <li class="countriesli">China cn</li>
+                <li class="countriesli">Colombia co</li>
+                <li>Costa Rica cr</li>
+                <li>Czech Republic cz</li>
+                <li>Denmark dk</li>
+                <li>Ecuador ec</li>
+                <li>Egypt eg</li>
+                <li>Finland fi</li>
+                <li>France fr</li>
+                <li>Germany de</li>
+                <li>Greece gr</li>
+                <li>Hong Kong hk</li>
+                <li>Hungary hu</li>
+                <li>India in</li>
+                <li>Indonesia id</li>
+                <li>Ireland ie</li>
+                <li>Israel il</li>
+                <li>Italy it</li>
+                <li>Japan jp</li>
+                <li>Kuwait kw</li>
+                <li>Luxembourg lu</li>
+                <li>Mexico mx</li>
+                <li>Morocco ma</li>
+                <li>Netherlands nl</li>
+                <li>New Zealand nz</li>
+                <li>Nigeria ng</li>
+                <li>Norway no</li>
+                <li>Oman om</li>
+                <li>Pakistan pk</li>
+                <li>Panama pa</li>
+                <li>Peru pe</li>
+                <li>Philippines ph</li>
+                <li>Poland pl</li>
+                <li>Portugal pt</li>
+                <li>Qatar qa</li>
+                <li>Romania ro</li>
+                <li>Russia ru</li>
+                <li>Saudi Arabia sa</li>
+                <li>Singapore sg</li>
+                <li>South Africa za</li>
+                <li>South Korea kr</li>
+                <li>Spain es</li>
+                <li>Sweden se</li>
+                <li>Switzerland ch</li>
+                <li>Taiwan tw</li>
+                <li>Thailand th</li>
+                <li>Turkey tr</li>
+                <li>Ukraine ua</li>
+                <li>United Arab Emirates ae</li>
+                <li>United Kingdom gb</li>
+                <li>United States us</li>
+                <li>Uruguay uy
+                    <li>Venezuela ve</li>
+                    <li>Vietnam vn</li>
+
+
+
+
+
+
+            </ul>
+        
+		</div>
+
+        <div class="col-md-6">
+            <input type="button" id="btn" class="btn btn-info btn-lg  btn-block" value="search">
+        </div>
+    </div>
+    
+
+
+    <div class="panel-panel-primary">
+
+		<div class="panel-heading">
+			<p id="results"></p>
+		</div>
+	</div>
+
+    <div id="box">
+
+
+    </div>
+
+
+    <div id="container">
+			
+
+        <div id="mybtn" class="col-md-12">
+            <input type="button" id="btn2" class="btn btn-info btn-lg  btn-block" value="load more jobs">
+
+        </div>
+    </div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class='well'>
+                <p  class='text-center'>copyright &copy Kingdom filmz all rights reserved. 2017</p>
+               
+        </div>
+    </div>
+    </div>
+</div>
+
+    <script>
+        //countries show up
+        var form = document.getElementById("country");
+        var form2 = document.getElementById("job");
+		var ko = document.getElementById("countries");
+		var results=document.getElementById("results");
+        form.addEventListener("click", showt);
+
+        function showt() {
+
+			ko.classList.toggle("active");
+			
+
+        }
+
+        //countries add to input
+        var li = ko.querySelectorAll("li");
+        for (var i = 0; i < li.length; i++) {
+            li[i].addEventListener("click", add);
+
+            function add() {
+
+				form.value = this.innerHTML;
+			
+				
+
+
+            }
+
+        }
+
+
+
+
+        //json
+        var img1;
+        var optr;
+        var jobs;
+        var urvl = "http://api.indeed.com/ads/apisearch?publisher=9428119086867749&q=JOB&l=dubai%2C&sort=&radius=&st=&jt=&start=&limit=100&fromage=&filter=&latlong=1&co=LOCATION&chnl=&userip=1.2.3.4&useragent=Mozilla/%2F4.0(Firefox)&v=2&format=json";
+        var url = "http://api.indeed.com/ads/apisearch?publisher=9428119086867749&q=engineer&sort=&radius=&st=&jt=&start=&limit=100&fromage=&filter=&latlong=1&co=LOCATION&chnl=&userip=1.2.3.4&useragent=Mozilla/%2F4.0(Firefox)&v=2&format=json";
+        //get input to url
+        var btn = document.getElementById("btn");
+        var btn2 = document.getElementById("btn2");
+        var link;
+        var addmore;
+        var joburl;
+        var joburl1;
+        var countryurl;
+        var countryurl1;
+        btn.addEventListener("click", search);
+        btn2.addEventListener("click", search2);
+        //search button
+        function search() {
+            joburl = form2.value.replace(/ /g,"").trim();
+            joburl1 = url.replace("engineer", joburl);
+            countryurl = form.value.slice(-3).trim();
+			countryurl1 = joburl1.replace("LOCATION", countryurl);
+			
+			results.innerHTML="SEARCH RESULTS FOR"+" "+form2.value+
+			" "+"jobs in" +" " +form.value.slice(0,-2);
+				
+			
+            setup();
+            jobs = " ";
+            console.log(countryurl1);
+
+        }
+
+        //load more button
+
+        function search2() {
+            joburl = form2.value.trim();
+            joburl1 = url.replace("engineer", joburl);
+            countryurl = form.value.slice(-3).trim();
+            countryurl1 = joburl1.replace("LOCATION", countryurl);
+
+            setup();
+            jobs += jobs;
+            console.log(countryurl1);
+
+        }
+
+
+        //onload default==us==engineer
+        window.onload = function setup() {
+            loadJSON(url, gotdata, "jsonp");
+
+        }
+
+
+        //on job search;
+        function setup() {
+
+            loadJSON(countryurl1, gotdata, "jsonp");
+            JSON.stringify({
+                field: undefined
+            }) === "{}";
+
+
+        }
+
+
+
+        function gotdata(data) {
+            console.log(data);
+            data.results.forEach(function(item) {
+                jobs += `
+	 
+	<div class="indeedData">
+	   <div id="indeedcontent" class="col-md-12" >
+	       <div class="panel panel-primary">
+	       <div class=" panel-heading" id="heading">
+		   <h1>JOB TITLE: <small style="color:white">${item.jobtitle}</small></h1>
+		    </div>
+			<div class=" panel-body">
+	           <p>COMPANY:<b> ${item.company.toUpperCase()}</b></p>
+	           <p>CITY: <b>${item.city.toUpperCase()}</b></p>
+	           
+	           <p>COUNTRY: <b>${item.country}</b></p>
+			 
+			   
+	             <p  style="font-size:20px;">DETAILS: ${item.snippet}</p>
+				 <div class="panel-footer">
+				 <p>DATE POSTED: ${item.date}</p>
+				 </p>DURATION: ${item.formattedRelativeTime}</p>
+				 </p>JOB KEY: ${item.jobkey}</p>
+				 <p>EXPIRED: ${item.expired}</p>
+				 <a href=${item.url} class="btn btn-primary" target="_blank">Read More</a>
+			      
+			   </div>
+			   </div>
+			   </div>
+			   
+	  </div>
+
+	</div>
+</div>
+	      
+ 
+	 
+	     `;
+
+
+
+
+            });
+
+
+
+            var box = document.getElementById("box");
+            box.innerHTML = (jobs);
+
+            btn2.style.display = "block";
+
+
+        }
+    </script>
+
+</body>
+
+
+
+</html>
